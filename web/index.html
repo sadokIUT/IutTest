@@ -27,7 +27,7 @@
     <!-- Header -->
     <header class="masthead">
       <div class="container">
-        <img class="img-fluid" src="img/8bit.gif" alt="">
+        <a href="javascript:void(0);"><img class="img-fluid" src="img/8bit.gif" alt="head"></a>
       </div>
     </header>
 
@@ -38,19 +38,19 @@
         <hr class="star-primary">
         <div class="row">
           <div class="col-sm-4 portfolio-item">
-              <img class="img-fluid" src="img/9bit.gif" alt="">
+              <a href="javascript:void(0);"><img class="img-fluid" src="img/9bit.gif" alt="La street"></a>
               <div class="text-center">
               hi
               </div>
           </div>
           <div class="col-sm-4 portfolio-item">
-              <img class="img-fluid" src="img/10bit.gif" alt="">
+              <a href="javascript:void(0);"><img class="img-fluid" src="img/10bit.gif" alt="kkdunet"></a>
               <div class="text-center">
               hi
               </div>
           </div>
           <div class="col-sm-4 portfolio-item">
-              <img class="img-fluid" src="img/11bit.gif" alt="">
+              <a href="javascript:void(0);"><img class="img-fluid" src="img/11bit.gif" alt="ww"></a>
               <div class="text-center">
               hi
               </div>
@@ -60,4 +60,25 @@
     </section>
 
   </body>
+
 </html>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#portfolio a").mouseover(function(e) {
+            e.preventDefault();
+
+            var src = $(this).attr("img");
+            var alt = $(this).children().attr("alt");
+
+            console.log(alt);
+        });
+          $.getJSON('https://swapi.co/api/people/1/?format=json', function(data) {
+             $.each( data, function( key, val ) {
+            items.push( "<li id='" + key + "'>" + val + "</li>" );
+            });
+            console.log(data);
+});
+
+    });
+  </script>
