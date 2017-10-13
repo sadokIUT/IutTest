@@ -58,8 +58,8 @@
         </div>
       </div>
     </section>
-          <h2 id="output">
-          </h2>
+          <h2 id="output"></h2>
+          <h2 id="character"></h2>
 
   </body>
 
@@ -80,6 +80,19 @@
             console.log(name);
             var output = document.getElementById('output');
             output.innerHTML= name;
+});
+
+          var listName = [];
+          $.getJSON('https://swapi.co/api/people/?format=json', function(data) {
+            $.each(data.results, function (index, value) {
+              listName.push("<li>"+value.name+"</li>");
+               
+              
+            });
+            console.log(listName);
+            var character = document.getElementById('character');
+              character.innerHTML= "<ul>"+listName.join("")+"<ul>";
+            
 });
 
     });
