@@ -58,6 +58,8 @@
         </div>
       </div>
     </section>
+          <h2 id="output">
+          </h2>
 
   </body>
 
@@ -76,6 +78,8 @@
           $.getJSON('https://swapi.co/api/people/1/?format=json', function(data) {
             var name = data["name"];
             console.log(name);
+            var output = document.getElementById('output');
+            output.innerHTML= name;
 });
 
     });
