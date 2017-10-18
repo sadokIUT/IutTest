@@ -30,6 +30,34 @@
         <a href="javascript:void(0);"><img class="img-fluid" src="img/8bit.gif" alt="head"></a>
       </div>
     </header>
+<!-- Button trigger modal -->          
+<h2 id="character"></h2>
+
+<div id="trucprfairelesmodal">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"></button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h2>****NAME****<h2>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
     <!-- Portfolio Grid Section -->
     <section id="portfolio">
@@ -59,12 +87,15 @@
       </div>
     </section>
           <h2 id="output"></h2>
-          <h2 id="character"></h2>
 
   </body>
 
 </html>
   <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/popper/popper.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
   <script type="text/javascript">
     $(document).ready(function () {
       $("#portfolio a").mouseover(function(e) {
@@ -82,16 +113,30 @@
             output.innerHTML= name;
 });
 
-          var listName = [];
           $.getJSON('https://swapi.co/api/people/?format=json', function(data) {
+            var perso = [];
+            var laDonne = [];
             $.each(data.results, function (index, value) {
-              listName.push("<li>"+value.name+"</li>");
+
+              var html = $("#trucprfairelesmodal").html();
+              perso.push("<ul>"+html+value.name+"</ul>");
+              $.getJSON(value.url, function(data) {
+                console.log($(".donnee").html());
+                laDonne.push(+data["name"])
                
-              
+              });
             });
-            console.log(listName);
+
+
+            console.log(perso);
+            console.log(laDonne);
+
             var character = document.getElementById('character');
-              character.innerHTML= "<ul>"+listName.join("")+"<ul>";
+              character.innerHTML= "<ul>"+perso.join("")+"<ul>";
+
+            var donnee = document.getElementById('donnee');
+              donnee.innerHTML= +laDonne.join("");
+            
             
 });
 
