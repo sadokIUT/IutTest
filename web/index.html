@@ -118,8 +118,7 @@
             var laDonne = [];
             $.each(data.results, function (index, value) {
 
-              var html = $("#trucprfairelesmodal").html();
-              perso.push("<ul>"+html+value.name+"</ul>");
+              perso.push("<ul>"++value.name+"</ul>");
               $.getJSON(value.url, function(data) {
                 console.log($(".donnee").html());
                 laDonne.push(+data["name"])
