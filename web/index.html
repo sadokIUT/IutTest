@@ -47,7 +47,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <h2>****NAME****<h2>
+          <h2 id="donnee"><h2>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -117,10 +117,9 @@
             var perso = [];
             var laDonne = [];
             $.each(data.results, function (index, value) {
-
-              perso.push("<ul>"++value.name+"</ul>");
+              perso.push("<ul>"+$("#trucprfairelesmodal").html()+value.name+"</ul>");
               $.getJSON(value.url, function(data) {
-                console.log($(".donnee").html());
+                console.log($("#donnee").html());
                 laDonne.push(+data["name"])
                
               });
