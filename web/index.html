@@ -31,8 +31,10 @@
       </div>
     </header>
 <!-- Button trigger modal -->     
-<ul id="listChar"></ul>     
-<h2 id="character"></h2>
+<ul id="listChar"></ul> 
+<button id="pagePrev" class="btn btn-primary">Page precedente</button>    
+<button id="pageNext" class="btn btn-primary">Page suivante</button>    
+
 
 <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -91,6 +93,7 @@
   <script src="vendor/jquery/jquery.min.js"></script>
 
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="vendor/bounce.js/bounce.min.js"></script>
 
 
   <script type="text/javascript">
@@ -109,14 +112,23 @@
         output.innerHTML= name;
 	    });
 
-      $.getJSON('https://swapi.co/api/people/?format=json')
-      .done(function( data ) {
-        var ul= $("#listChar");
-        $.each(data.results, function(index, character){
-          var li = "<li>"+createUrl(character.name, character.url)+"</li>";
-          ul.append(li);
-        });
+      var prev, next;
+      var ul= $("#listChar");
+
+      getList('https://swapi.co/api/people');
+
+
+      $('#pageNext').on('click', function(){
+        ul.empty();
+        getList(next); 
       })
+      $('#pagePrev').on('click', function(){
+        ul.empty();
+        getList(prev); 
+      })
+
+
+
       $('#exampleModal').on('show.bs.modal', function(e){
         var detail = $(this).find('#donnee');
         var title = $(this).find('#exampleModalLabel');
@@ -137,8 +149,46 @@
             })
         })
       })
+      
+
+
+
+      var bounce = new Bounce();
+      bounce.rotate({
+        from: 180,
+        to: 0
+      });
+      bounce.applyTo($(".img-fluid"));
+
+      function getList (url){
+      $.getJSON(url)
+      .done(function( data ) {
+        $('#pagePrev').show()
+        $('#pageNext').show()
+
+        var ul= $("#listChar");
+
+        next = data.next
+        prev = data.previous
+        if (prev == null){
+          $('#pagePrev').hide()
+        }
+        if (next == null){
+          $('#pageNext').hide()
+        }
+
+        $.each(data.results, function(index, character){
+          var li = "<li>"+createUrl(character.name, character.url)+"</li>";
+          ul.append(li);
+        });
+      })
+    }
   });
+    
+
+
     function createUrl (name, url){
       return '<a href="'+url+'" data-toggle="modal" data-target="#exampleModal">'+name+'</a>'
     }
+
   </script>
